@@ -5,10 +5,18 @@ const SimpleInput = (props) => {
   const [enterNameIsValid, setEnterNameIsValid] = useState(false)
   //mặc định ban đầu thì trường này sẽ không được touch vào
   const [enteredNameTouched, setEnteredNameTouched] = useState(false)
+
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value)
   }
 
+  const nameInputBlurHandler = (event) => {
+    setEnteredNameTouched(true)
+    if (enteredName.trim() === "") {
+      setEnterNameIsValid(false)
+      return
+    }
+  }
   const formSubmissionHandler = (event) => {
     event.preventDefault()
     //Được hiểu là nếu người dùng ban đầu không thay đổi gì input và submit luôn thì tất cả các trường sẽ được hiểu là đã được touch
@@ -40,6 +48,7 @@ const SimpleInput = (props) => {
       <div className={nameInputClasses}>
         <label htmlFor="name">Your Name</label>
         <input
+          onBlur={nameInputBlurHandler}
           onChange={nameInputChangeHandler}
           type="text"
           id="name"
