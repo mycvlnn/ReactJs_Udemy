@@ -2,10 +2,13 @@ import { useState } from "react"
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("")
-  //mặc định ban đầu thì trường này sẽ không được touch vào
   const [enteredNameTouched, setEnteredNameTouched] = useState(false)
   const enteredNameIsValid = enteredName.trim() !== ""
   const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched
+  let formIsValid = false
+  if (enteredNameIsValid) {
+    formIsValid = true
+  }
 
   const nameInputChangeHandler = (e) => {
     setEnteredName(e.target.value)
@@ -14,6 +17,7 @@ const SimpleInput = (props) => {
   const nameInputBlurHandler = (event) => {
     setEnteredNameTouched(true)
   }
+
   const formSubmissionHandler = (event) => {
     event.preventDefault()
     //Được hiểu là nếu người dùng ban đầu không thay đổi gì input và submit luôn thì tất cả các trường sẽ được hiểu là đã được touch
@@ -46,7 +50,7 @@ const SimpleInput = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   )
