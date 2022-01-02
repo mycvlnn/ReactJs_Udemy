@@ -1,66 +1,38 @@
-import { useState } from "react"
-
+import useInput from "../hooks/useInput"
+import { regexEmail } from "../constants"
 const BasicForm = (props) => {
+  const isFirstNameValid = (value) => value.trim() !== ""
+  const isLastNameValid = (value) => value.trim() !== ""
+  const isEmailValid = (value) => value.match(regexEmail) && value.trim() !== ""
   //first name
-  const [enteredFirstName, setEnteredFirstName] = useState("")
-
-  const [enteredFirstNameTouched, setEnteredFirstNameTouched] = useState(false)
-
-  const enteredFirstNameIsValid = enteredFirstName !== ""
-
-  const firstNameInputIsInvalid =
-    !enteredFirstNameIsValid && enteredFirstNameTouched
-
-  const firstNameInputChangeHandler = (e) => {
-    setEnteredFirstName(e.target.value)
-  }
-
-  const firstNameInputBlurHandler = (e) => {
-    setEnteredFirstNameTouched(true)
-  }
-  //End
+  const {
+    value: enteredFirstName,
+    hasError: firstNameInputIsInvalid,
+    isValid: enteredFirstNameIsValid,
+    valueChangeHandler: firstNameInputChangeHandler,
+    inputBlurHandler: firstNameInputBlurHandler,
+    reset: resetFirstName,
+  } = useInput(isFirstNameValid)
 
   //last name
-  const [enteredLastName, setEnteredLastName] = useState("")
-
-  const [enteredLastNameTouched, setEnteredLastNameTouched] = useState(false)
-
-  const enteredLastNameIsValid = enteredLastName !== ""
-
-  const lastNameInputIsInvalid =
-    !enteredLastNameIsValid && enteredLastNameTouched
-
-  const lastNameInputChangeHandler = (e) => {
-    setEnteredLastName(e.target.value)
-  }
-
-  const lastNameInputBlurHandler = (e) => {
-    setEnteredLastNameTouched(true)
-  }
-
-  //end
+  const {
+    value: enteredLastName,
+    hasError: lastNameInputIsInvalid,
+    isValid: enteredLastNameIsValid,
+    valueChangeHandler: lastNameInputChangeHandler,
+    inputBlurHandler: lastNameInputBlurHandler,
+    reset: resetLastName,
+  } = useInput(isLastNameValid)
 
   //email
-  const [enteredEmail, setEnteredEmail] = useState("")
-
-  const [enteredEmailTouched, setEnteredEmailTouched] = useState(false)
-
-  const regexEmail =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
-  const enteredEmailIsValid =
-    enteredEmail !== "" && enteredEmail.match(regexEmail)
-
-  const emailInputIsInvalid = !enteredEmailIsValid && enteredEmailTouched
-
-  const emailInputChangeHandler = (e) => {
-    setEnteredEmail(e.target.value)
-  }
-
-  const emailInputBlurHandler = (e) => {
-    setEnteredEmailTouched(true)
-  }
-  //end
+  const {
+    value: enteredEmail,
+    hasError: emailInputIsInvalid,
+    isValid: enteredEmailIsValid,
+    valueChangeHandler: emailInputChangeHandler,
+    inputBlurHandler: emailInputBlurHandler,
+    reset: resetEmail,
+  } = useInput(isEmailValid)
 
   let isFormValid = false
 
@@ -85,28 +57,20 @@ const BasicForm = (props) => {
     alert(JSON.stringify(values))
 
     //Clear value input and touche
-    setEnteredFirstName("")
-    setEnteredFirstNameTouched(false)
+    resetFirstName()
+    resetLastName()
+    resetEmail()
+  }
 
-    setEnteredLastName("")
-    setEnteredLastNameTouched(false)
-
-    setEnteredEmail("")
-    setEnteredEmailTouched(false)
+  const classNameHandler = (valueInputIsInvalid) => {
+    return valueInputIsInvalid ? "form-control invalid" : "form-control"
   }
 
   //css classes error
-  const firstNameClasses = firstNameInputIsInvalid
-    ? "form-control invalid"
-    : "form-control"
+  const firstNameClasses = classNameHandler(firstNameInputIsInvalid)
+  const lastNameClasses = classNameHandler(lastNameInputIsInvalid)
+  const emailClasses = classNameHandler(emailInputIsInvalid)
 
-  const lastNameClasses = lastNameInputIsInvalid
-    ? "form-control invalid"
-    : "form-control"
-
-  const emailClasses = emailInputIsInvalid
-    ? "form-control invalid"
-    : "form-control"
   return (
     <form onSubmit={handleSubmit}>
       <div className="control-group">
