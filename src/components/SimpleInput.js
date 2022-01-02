@@ -1,21 +1,18 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("")
-  const [enterNameIsValid, setEnterNameIsValid] = useState(false)
   //mặc định ban đầu thì trường này sẽ không được touch vào
   const [enteredNameTouched, setEnteredNameTouched] = useState(false)
+  const enteredNameIsValid = enteredName.trim() !== ""
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched
 
-  const nameInputChangeHandler = (event) => {
-    setEnteredName(event.target.value)
+  const nameInputChangeHandler = (e) => {
+    setEnteredName(e.target.value)
   }
 
   const nameInputBlurHandler = (event) => {
     setEnteredNameTouched(true)
-    if (enteredName.trim() === "") {
-      setEnterNameIsValid(false)
-      return
-    }
   }
   const formSubmissionHandler = (event) => {
     event.preventDefault()
@@ -23,26 +20,16 @@ const SimpleInput = (props) => {
     //trong trường hợp này thì ta chỉ có một trường thôi
     setEnteredNameTouched(true)
     //Check truong hop la rong thi khong thuc hien lenh ben duoi
-    if (enteredName.trim() === "") {
-      setEnterNameIsValid(false)
-      return
-    }
+    if (!enteredNameIsValid) return
     alert(enteredName)
     setEnteredName("")
+    setEnteredNameTouched(false)
   }
-  const nameInputIsInvalid = !enterNameIsValid && enteredNameTouched
 
   const nameInputClasses = nameInputIsInvalid
     ? "form-control invalid"
     : "form-control"
 
-  useEffect(() => {
-    //to do something
-    if (enterNameIsValid) {
-      //demo http request
-      console.log("send value to server")
-    }
-  }, [enterNameIsValid])
   return (
     <form onSubmit={formSubmissionHandler}>
       <div className={nameInputClasses}>
