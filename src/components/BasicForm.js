@@ -74,9 +74,6 @@ const BasicForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setEnteredFirstNameTouched(true)
-    setEnteredLastNameTouched(true)
-    setEnteredEmailTouched(true)
     if (!isFormValid) {
       return
     }
@@ -154,7 +151,7 @@ const BasicForm = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!isFormValid}>Submit</button>
       </div>
     </form>
   )
