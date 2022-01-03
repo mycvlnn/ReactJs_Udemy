@@ -15,7 +15,7 @@ const useInput = (validateValue) => {
     setIsTouched(true)
   }
 
-  const reset = () => {
+  const resetValue = () => {
     setEnteredValue("")
     setIsTouched(false)
   }
@@ -26,7 +26,7 @@ const useInput = (validateValue) => {
     isValid: valueIsValid,
     valueChangeHandler,
     inputBlurHandler,
-    reset,
+    resetValue,
   }
 }
 export default useInput

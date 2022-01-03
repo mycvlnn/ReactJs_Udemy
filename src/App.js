@@ -1,9 +1,9 @@
-import BasicForm from "./components/BasicForm"
+import SignupForm from "./pages/SignUpForm/SignUpForm"
 
 function App() {
   return (
     <div className="app">
-      <BasicForm />
+      <SignupForm />
     </div>
   )
 }

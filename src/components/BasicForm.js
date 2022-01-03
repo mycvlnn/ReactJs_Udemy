@@ -4,14 +4,16 @@ const BasicForm = (props) => {
   const isFirstNameValid = (value) => value.trim() !== ""
   const isLastNameValid = (value) => value.trim() !== ""
   const isEmailValid = (value) => value.match(regexEmail) && value.trim() !== ""
+
   //first name
+
   const {
     value: enteredFirstName,
     hasError: firstNameInputIsInvalid,
     isValid: enteredFirstNameIsValid,
     valueChangeHandler: firstNameInputChangeHandler,
     inputBlurHandler: firstNameInputBlurHandler,
-    reset: resetFirstName,
+    resetValue: resetFirstName,
   } = useInput(isFirstNameValid)
 
   //last name
@@ -21,7 +23,7 @@ const BasicForm = (props) => {
     isValid: enteredLastNameIsValid,
     valueChangeHandler: lastNameInputChangeHandler,
     inputBlurHandler: lastNameInputBlurHandler,
-    reset: resetLastName,
+    resetValue: resetLastName,
   } = useInput(isLastNameValid)
 
   //email
@@ -31,7 +33,7 @@ const BasicForm = (props) => {
     isValid: enteredEmailIsValid,
     valueChangeHandler: emailInputChangeHandler,
     inputBlurHandler: emailInputBlurHandler,
-    reset: resetEmail,
+    resetValue: resetEmail,
   } = useInput(isEmailValid)
 
   let isFormValid = false
