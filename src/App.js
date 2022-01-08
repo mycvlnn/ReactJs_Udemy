@@ -1,5 +1,5 @@
-import "./App.css"
 import ExpenseItem from "./components/Expenses/ExpenseItem"
+import NewExpenses from "./components/NewExpenses/NewExpenses"
 import Card from "./components/UI/Card"
 
 function App() {
@@ -31,7 +31,10 @@ function App() {
   }
   return (
     <div className="App">
-      <Card>{renderExpenses()}</Card>
+      <Card className="expense">
+        <NewExpenses />
+        {renderExpenses()}
+      </Card>
     </div>
   )
 }
