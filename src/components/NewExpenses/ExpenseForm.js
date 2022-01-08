@@ -7,6 +7,7 @@ const ExpenseForm = () => {
     enteredAmount: "",
     enteredDate: "",
   })
+  console.log("re-render")
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target
@@ -22,6 +23,11 @@ const ExpenseForm = () => {
   const onSubmitHandler = (event) => {
     event.preventDefault()
     console.log(userInput)
+    setUserInput({
+      enteredTitle: "",
+      enteredAmount: "",
+      enteredDate: "",
+    })
   }
 
   return (
