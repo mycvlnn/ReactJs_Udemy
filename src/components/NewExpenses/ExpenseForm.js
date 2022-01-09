@@ -28,7 +28,7 @@ const ExpenseForm = (props) => {
     setUserInput({
       title: "",
       amount: "",
-      enteredDate: "",
+      date: "",
     })
   }
 
@@ -37,11 +37,17 @@ const ExpenseForm = (props) => {
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input name="title" type="text" onChange={onChangeHandler} />
+          <input
+            value={userInput.title}
+            name="title"
+            type="text"
+            onChange={onChangeHandler}
+          />
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
           <input
+            value={userInput.amount}
             name="amount"
             type="number"
             min="0.01"
@@ -52,6 +58,7 @@ const ExpenseForm = (props) => {
         <div className="new-expense__control">
           <label>Date</label>
           <input
+            value={userInput.date}
             name="date"
             type="date"
             min="2019-01-01"

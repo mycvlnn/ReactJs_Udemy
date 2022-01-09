@@ -29,8 +29,8 @@ function App() {
   const [filteredYear, setFilteredYear] = useState("2020")
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES)
   const renderExpenses = () => {
-    return expenses.map((expense, index) => {
-      return <ExpenseItem key={index} expense={expense} />
+    return expenses.map((expense) => {
+      return <ExpenseItem expense={expense} />
     })
   }
 
