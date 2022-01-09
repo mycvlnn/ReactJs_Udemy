@@ -1,8 +1,8 @@
 import ExpensesFilter from "components/Expenses/ExpensesFilter"
 import { useState } from "react"
-import ExpenseItem from "./components/Expenses/ExpenseItem"
 import NewExpenses from "./components/NewExpenses/NewExpenses"
 import Card from "./components/UI/Card"
+import ExpenseList from "components/Expenses/ExpenseList/ExpenseList"
 
 const DUMMY_EXPENSES = [
   {
@@ -33,11 +33,6 @@ function App() {
   const filterExpense = expenses.filter(
     (expense) => expense.date.getFullYear().toString() === filteredYear
   )
-  const renderExpenses = () => {
-    return filterExpense.map((expense) => {
-      return <ExpenseItem key={expense.id} expense={expense} />
-    })
-  }
 
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
@@ -57,7 +52,7 @@ function App() {
           selected={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
-        {renderExpenses()}
+        <ExpenseList items={filterExpense} />
       </Card>
     </div>
   )
