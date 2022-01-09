@@ -2,9 +2,9 @@ import React, { useState } from "react"
 import "./ExpenseForm.css"
 const ExpenseForm = (props) => {
   const [userInput, setUserInput] = useState({
-    enteredTitle: "",
-    enteredAmount: "",
-    enteredDate: "",
+    title: "",
+    amount: "",
+    date: "",
   })
 
   const onChangeHandler = (event) => {
@@ -18,31 +18,31 @@ const ExpenseForm = (props) => {
     })
   }
 
-  const onSubmitHandler = (event) => {
+  const submitHandler = (event) => {
     event.preventDefault()
     const expenseData = {
       ...userInput,
-      enteredDate: new Date(userInput.enteredDate),
+      date: new Date(userInput.date),
     }
     props.onSaveExpenseData(expenseData)
     setUserInput({
-      enteredTitle: "",
-      enteredAmount: "",
+      title: "",
+      amount: "",
       enteredDate: "",
     })
   }
 
   return (
-    <form onSubmit={onSubmitHandler}>
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input name="enteredTitle" type="text" onChange={onChangeHandler} />
+          <input name="title" type="text" onChange={onChangeHandler} />
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
           <input
-            name="enteredAmount"
+            name="amount"
             type="number"
             min="0.01"
             step="0.01"
@@ -52,7 +52,7 @@ const ExpenseForm = (props) => {
         <div className="new-expense__control">
           <label>Date</label>
           <input
-            name="enteredDate"
+            name="date"
             type="date"
             min="2019-01-01"
             step="2022-12-31"
