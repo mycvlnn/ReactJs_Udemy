@@ -29,10 +29,16 @@ function App() {
       return <ExpenseItem key={index} expense={expense} />
     })
   }
+
+  const addExpenseHandler = (expense) => {
+    console.log("App.js")
+    console.log("expense", expense)
+  }
+
   return (
     <div className="App">
       <Card className="expense">
-        <NewExpenses />
+        <NewExpenses onAddExpense={addExpenseHandler} />
         {renderExpenses()}
       </Card>
     </div>

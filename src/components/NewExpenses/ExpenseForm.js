@@ -1,13 +1,11 @@
 import React, { useState } from "react"
 import "./ExpenseForm.css"
-
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   const [userInput, setUserInput] = useState({
     enteredTitle: "",
     enteredAmount: "",
     enteredDate: "",
   })
-  console.log("re-render")
 
   const onChangeHandler = (event) => {
     const { name, value } = event.target
@@ -22,7 +20,11 @@ const ExpenseForm = () => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault()
-    console.log(userInput)
+    const expenseData = {
+      ...userInput,
+      enteredDate: new Date(userInput.enteredDate),
+    }
+    props.onSaveExpenseData(expenseData)
     setUserInput({
       enteredTitle: "",
       enteredAmount: "",
