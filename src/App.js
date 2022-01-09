@@ -27,10 +27,15 @@ const DUMMY_EXPENSES = [
 ]
 function App() {
   const [filteredYear, setFilteredYear] = useState("2020")
+
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES)
+
+  const filterExpense = expenses.filter(
+    (expense) => expense.date.getFullYear().toString() === filteredYear
+  )
   const renderExpenses = () => {
-    return expenses.map((expense) => {
-      return <ExpenseItem expense={expense} />
+    return filterExpense.map((expense) => {
+      return <ExpenseItem key={expense.id} expense={expense} />
     })
   }
 
@@ -38,8 +43,6 @@ function App() {
     setExpenses((prevExpenses) => {
       return [expense, ...prevExpenses]
     })
-
-    //Chỗ này sẽ setState trong tương lai
   }
 
   const filterChangeHandler = (selectedYear) => {
