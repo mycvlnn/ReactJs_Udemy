@@ -3,6 +3,7 @@ import { useState } from "react"
 import NewExpenses from "./components/NewExpenses/NewExpenses"
 import Card from "./components/UI/Card"
 import ExpenseList from "components/Expenses/ExpenseList/ExpenseList"
+import ExpenseChart from "components/Expenses/ExpenseChart"
 
 const DUMMY_EXPENSES = [
   {
@@ -48,6 +49,7 @@ function App() {
     <div className="App">
       <Card className="expense">
         <NewExpenses onAddExpense={addExpenseHandler} />
+        <ExpenseChart expenses={filterExpense} />
         <ExpensesFilter
           selected={filteredYear}
           onChangeFilter={filterChangeHandler}
