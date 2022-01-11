@@ -1,0 +1,69 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.75);
+  transition: all 0.3s;
+}
+
+.modal {
+  position: fixed;
+  top: 30vh;
+  left: 10%;
+  width: 80%;
+  z-index: 100;
+  overflow: hidden;
+  -webkit-animation: growth linear 0.5s;
+  animation: growth linear 0.5s;
+}
+
+@-webkit-keyframes growth {
+  from {
+    opacity: 0;
+    top: 20vh;
+  }
+  to {
+    opacity: 1;
+    top: 30vh;
+  }
+}
+
+@keyframes growth {
+  from {
+    opacity: 0;
+    top: 20vh;
+  }
+  to {
+    opacity: 1;
+    top: 30vh;
+  }
+}
+.header {
+  background: #4f005f;
+  padding: 1rem;
+}
+
+.header h2 {
+  margin: 0;
+  color: white;
+}
+
+.content {
+  padding: 1rem;
+}
+
+.actions {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    left: calc(50% - 20rem);
+    width: 40rem;
+  }
+}
