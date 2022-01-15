@@ -15,23 +15,23 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         enteredEmail: payload,
-        emailIsValid: state.enteredEmail.includes("@"),
+        emailIsValid: payload.includes("@"),
       }
     }
     case "EMAIL_BLUR": {
-      return { ...state, emailIsValid: state.enteredEmail.includes("@") }
+      return { ...state, emailIsValid: payload.includes("@") }
     }
     case "PASSWORD_INPUT": {
       return {
         ...state,
         enteredPassword: payload,
-        passwordIsValid: state.enteredPassword.trim().length > 6,
+        passwordIsValid: payload.trim().length > 6,
       }
     }
     case "PASSWORD_BLUR": {
       return {
         ...state,
-        passwordIsValid: state.enteredPassword.trim().length > 6,
+        passwordIsValid: payload.trim().length > 6,
       }
     }
     default:
