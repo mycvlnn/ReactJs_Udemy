@@ -1,15 +1,24 @@
-import React, { useState, useEffect, useReducer, useContext } from "react"
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  useContext,
+  useMemo,
+} from "react"
 
 import Card from "../UI/Card/Card"
-import classes from "./Login.module.css"
 import Button from "../UI/Button/Button"
 import AuthContext from "../../store/authContext"
+import Input from "../UI/Input/Input"
+import classes from "./Login.module.css"
+
 const initialState = {
   enteredEmail: "",
   enteredPassword: "",
   emailIsValid: null,
   passwordIsValid: null,
 }
+
 const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case "EMAIL_INPUT": {
@@ -35,10 +44,12 @@ const reducer = (state = initialState, { type, payload }) => {
         passwordIsValid: state.enteredPassword.trim().length > 6,
       }
     }
+
     default:
       return state
   }
 }
+
 const Login = (props) => {
   const ctx = useContext(AuthContext)
   const [formIsValid, setFormIsValid] = useState(false)
@@ -73,7 +84,13 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault()
-    ctx.onLogin(enteredEmail, enteredPassword)
+    if (formIsValid) {
+      ctx.onLogin(enteredEmail, enteredPassword)
+    } else if (!emailIsValid) {
+      validateEmailHandler()
+    } else {
+      validatePasswordHandler()
+    }
   }
 
   useEffect(() => {
@@ -88,39 +105,37 @@ const Login = (props) => {
     }
   }, [emailIsValid, passwordIsValid])
 
+  const inputs = [
+    {
+      value: enteredEmail,
+      id: "email",
+      label: "E-Mail",
+      type: "email",
+      isValid: emailIsValid,
+      onChange: emailChangeHandler,
+      onBlur: validateEmailHandler,
+    },
+    {
+      value: enteredPassword,
+      id: "password",
+      label: "Password",
+      type: "password",
+      isValid: passwordIsValid,
+      onChange: passwordChangeHandler,
+      onBlur: validatePasswordHandler,
+    },
+  ]
+  const renderInputs = () => {
+    return inputs.map((input) => {
+      return <Input key={input.id} {...input} />
+    })
+  }
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
-        <div
-          className={`${classes.control} ${
-            emailIsValid === false ? classes.invalid : ""
-          }`}
-        >
-          <label htmlFor="email">E-Mail</label>
-          <input
-            type="email"
-            id="email"
-            value={enteredEmail}
-            onChange={emailChangeHandler}
-            onBlur={validateEmailHandler}
-          />
-        </div>
-        <div
-          className={`${classes.control} ${
-            passwordIsValid === false ? classes.invalid : ""
-          }`}
-        >
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={enteredPassword}
-            onChange={passwordChangeHandler}
-            onBlur={validatePasswordHandler}
-          />
-        </div>
+        {renderInputs()}
         <div className={classes.actions}>
-          <Button type="submit" className={classes.btn} disabled={!formIsValid}>
+          <Button type="submit" className={classes.btn}>
             Login
           </Button>
         </div>
