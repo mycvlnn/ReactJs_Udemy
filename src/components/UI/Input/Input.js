@@ -1,16 +1,18 @@
-import React, { useEffect, useRef } from "react"
+import React, { useRef, useImperativeHandle, forwardRef } from "react"
 import classes from "./Input.module.css"
-const Input = (props) => {
+const Input = (props, ref) => {
   const inputRef = useRef()
   const { isValid, label, value, onChange, onBlur, id, type } = props
-  // const activate = () => {
-  //   inputRef.current.focus()
-  // }
-  useEffect(() => {
-    if (isValid === false) {
-      inputRef.current.focus()
+  console.log("re-render")
+  const activate = () => {
+    inputRef.current.focus()
+  }
+  useImperativeHandle(ref, () => {
+    return {
+      focus: activate,
     }
   })
+
   return (
     <div
       className={`${classes.control} ${
@@ -30,4 +32,4 @@ const Input = (props) => {
   )
 }
 
-export default React.memo(Input)
+export default forwardRef(Input)
