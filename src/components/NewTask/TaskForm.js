@@ -1,6 +1,7 @@
-import { useRef } from 'react';
+import { useRef } from "react";
+import Button from "../Button/Button";
 
-import classes from './TaskForm.module.css';
+import classes from "./TaskForm.module.css";
 
 const TaskForm = (props) => {
   const taskInputRef = useRef();
@@ -17,8 +18,10 @@ const TaskForm = (props) => {
 
   return (
     <form className={classes.form} onSubmit={submitHandler}>
-      <input type='text' ref={taskInputRef} />
-      <button>{props.loading ? 'Sending...' : 'Add Task'}</button>
+      <input type="text" ref={taskInputRef} />
+      <Button isLoading={props.loading} contentLoading="Sending...">
+        AddTask
+      </Button>
     </form>
   );
 };
