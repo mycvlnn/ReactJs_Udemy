@@ -1,29 +1,22 @@
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Routes, Navigate } from "react-router-dom";
 
-import Welcome from './pages/Welcome';
-import Products from './pages/Products';
-import ProductDetail from './pages/ProductDetail';
-import MainHeader from './components/MainHeader';
+import Welcome from "./pages/Welcome";
+import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
+import MainHeader from "./components/MainHeader";
 
 function App() {
   return (
     <div>
       <MainHeader />
       <main>
-        <Switch>
-          <Route path='/' exact>
-            <Redirect to='/welcome' />
-          </Route>
-          <Route path='/welcome'>
-            <Welcome />
-          </Route>
-          <Route path='/products' exact>
-            <Products />
-          </Route>
-          <Route path='/products/:productId'>
-            <ProductDetail />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Navigate replace to="/welcome" />} />
+          <Route path="/welcome/*" element={<Welcome />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/products/:productId" element={<ProductDetail />} />
+          <Route path="*" element={<h2>404 page not found</h2>} />
+        </Routes>
       </main>
     </div>
   );
