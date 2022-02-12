@@ -1,4 +1,4 @@
-import { useReducer, useCallback } from "react";
+import { useReducer, useCallback, useEffect, useRef } from "react";
 
 function httpReducer(state, action) {
   if (action.type === "SEND") {
@@ -29,6 +29,7 @@ function httpReducer(state, action) {
 }
 
 function useHttp(requestFunction, startWithPending = false) {
+  const isUnmounted = useRef(false);
   const [httpState, dispatch] = useReducer(httpReducer, {
     status: startWithPending ? "pending" : null,
     data: null,
@@ -40,8 +41,10 @@ function useHttp(requestFunction, startWithPending = false) {
       dispatch({ type: "SEND" });
       try {
         const responseData = await requestFunction(requestData);
+        if (isUnmounted.current) return;
         dispatch({ type: "SUCCESS", responseData });
       } catch (error) {
+        if (isUnmounted.current) return;
         dispatch({
           type: "ERROR",
           errorMessage: error.message || "Something went wrong!",
@@ -50,6 +53,13 @@ function useHttp(requestFunction, startWithPending = false) {
     },
     [requestFunction]
   );
+
+  useEffect(() => {
+    //Clean up before component unmounted
+    return () => {
+      isUnmounted.current = true;
+    };
+  }, []);
 
   return {
     sendRequest,
