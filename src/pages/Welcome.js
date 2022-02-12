@@ -1,13 +1,16 @@
-import { Link, Route, Routes } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 const Welcome = () => {
   return (
     <section>
       <h1>The Welcome Page</h1>
-      <Link to="new-user">New User</Link>
-      <Routes>
-        <Route path="new-user" element={<p>Welcome, new user!</p>} />
-      </Routes>
+      <NavLink
+        className={(nav) => (nav.isActive ? "hidden" : "")}
+        to="new-user"
+      >
+        New User
+      </NavLink>
+      <Outlet />
     </section>
   );
 };
