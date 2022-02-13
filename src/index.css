@@ -54,3 +54,6 @@ body {
   background-color: teal;
   color: white;
 }
+.hidden {
+  display: none;
+}
