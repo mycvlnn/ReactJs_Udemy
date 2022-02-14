@@ -1,49 +1,66 @@
-import Card from '../UI/Card';
-import MealItem from './MealItem/MealItem';
-import classes from './AvailableMeals.module.css';
-
-const DUMMY_MEALS = [
-  {
-    id: 'm1',
-    name: 'Sushi',
-    description: 'Finest fish and veggies',
-    price: 22.99,
-  },
-  {
-    id: 'm2',
-    name: 'Schnitzel',
-    description: 'A german specialty!',
-    price: 16.5,
-  },
-  {
-    id: 'm3',
-    name: 'Barbecue Burger',
-    description: 'American, raw, meaty',
-    price: 12.99,
-  },
-  {
-    id: 'm4',
-    name: 'Green Bowl',
-    description: 'Healthy...and green...',
-    price: 18.99,
-  },
-];
+import Card from "../UI/Card";
+import MealItem from "./MealItem/MealItem";
+import classes from "./AvailableMeals.module.css";
+import { useEffect, useState } from "react";
+import useHttp from "../../hooks/use-http";
+import LoadingSpinner from "../UI/LoadingSpinner";
+import { foodOrderApp } from "../../lib/api";
 
 const AvailableMeals = () => {
-  const mealsList = DUMMY_MEALS.map((meal) => (
-    <MealItem
-      key={meal.id}
-      id={meal.id}
-      name={meal.name}
-      description={meal.description}
-      price={meal.price}
-    />
-  ));
+  const {
+    sendRequest,
+    status,
+    data: meals,
+    error,
+  } = useHttp(foodOrderApp.getAllMeals, true);
+
+  useEffect(() => {
+    //call api load data
+    sendRequest();
+  }, [sendRequest]);
+
+  let content;
+
+  if (status === "pending") {
+    content = (
+      <div className="centered">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (status === "success") {
+    content = (
+      <div className="centered">
+        <h2>Meals Empty</h2>
+      </div>
+    );
+
+    if (meals.length > 0) {
+      content = meals.map((meal) => (
+        <MealItem
+          key={meal.id}
+          id={meal.id}
+          name={meal.name}
+          description={meal.description}
+          price={meal.price}
+        />
+      ));
+    }
+  }
+
+  if (error) {
+    content = (
+      <div className="centered">
+        <h2>{content}</h2>
+      </div>
+    );
+  }
 
   return (
     <section className={classes.meals}>
       <Card>
-        <ul>{mealsList}</ul>
+        <ul>{content}</ul>
       </Card>
     </section>
   );
