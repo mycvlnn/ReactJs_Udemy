@@ -4,8 +4,8 @@ import { increase, decrement, toggleCounter, increment } from "../store";
 import classes from "./Counter.module.css";
 
 const Counter = () => {
-  const counter = useSelector((state) => state.counter);
-  const showToggle = useSelector((state) => state.showToggle);
+  const { counter, showToggle } = useSelector((state) => state.counter);
+
   const dispatch = useDispatch();
   const toggleCounterHandler = () => {
     dispatch(toggleCounter());
