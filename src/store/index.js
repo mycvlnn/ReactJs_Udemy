@@ -27,6 +27,9 @@ const counterSlice = createSlice({
   },
 });
 
+export const { increase, decrement, increment, toggleCounter } =
+  counterSlice.actions;
+
 const store = configureStore({
   reducer: counterSlice.reducer, //Ngoài ra chúng ta cũng có thể truyền vào là object trong trường hợp chúng ta có nhiều hơn 1 reducer.
 });
