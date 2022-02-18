@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../store";
+import { logout } from "../store/auth";
 import classes from "./Header.module.css";
 
 const Header = () => {
