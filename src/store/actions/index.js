@@ -1,7 +1,14 @@
 import { cartActions } from "../reducers/cartSlice";
 import { uiActions } from "../reducers/uiSlice";
 
-const { addToCart, increaseQuantity } = cartActions;
-const { toggleCart, showNotify } = uiActions;
+const { addToCart, increaseQuantity, fetchCarts } = cartActions;
+const { toggleCart, showNotify, hideNotify } = uiActions;
 
-export { addToCart, increaseQuantity, toggleCart, showNotify };
+export {
+  addToCart,
+  increaseQuantity,
+  toggleCart,
+  showNotify,
+  fetchCarts,
+  hideNotify,
+};

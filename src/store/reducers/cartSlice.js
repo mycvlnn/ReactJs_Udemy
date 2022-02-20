@@ -2,14 +2,19 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initCartSlice = {
   carts: [],
+  isChanged: false,
 };
 
 const cartReducer = createSlice({
   name: "cart",
   initialState: initCartSlice,
   reducers: {
+    fetchCarts(state, action) {
+      state.carts = action.payload;
+    },
     addToCart(state, action) {
       console.log("action", action);
+      state.isChanged = true;
       const { payload } = action;
       const index = state.carts.findIndex((cart) => cart.id === payload.id);
       if (index !== -1) {
@@ -19,6 +24,7 @@ const cartReducer = createSlice({
       }
     },
     increaseQuantity(state, action) {
+      state.isChanged = true;
       const { payload } = action;
       const { id, number } = payload;
       const index = state.carts.findIndex((cart) => cart.id === id);
