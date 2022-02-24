@@ -13,19 +13,16 @@ const AuthForm = () => {
     setIsLogin((prevState) => !prevState);
   };
 
-  const signupApiHandler = async (values) => {
+  const submitApiHandler = async (url, values) => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA3JNrobkyWUjoHwlDlZHToS5fxJYpi92Q",
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          method: "POST",
-          body: JSON.stringify(values),
-        }
-      );
+      const response = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify(values),
+      });
       const data = await response.json();
       console.log("data", data);
 
@@ -38,8 +35,6 @@ const AuthForm = () => {
     setIsLoading(false);
   };
 
-  const loginApiHandler = () => {};
-
   const submitHandler = (event) => {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
@@ -51,14 +46,21 @@ const AuthForm = () => {
       return;
     }
 
+    const body = {
+      email: enteredEmail,
+      password: enteredPassword,
+      returnSecureToken: true,
+    };
     if (isLogin) {
-      loginApiHandler();
+      submitApiHandler(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA3JNrobkyWUjoHwlDlZHToS5fxJYpi92Q",
+        body
+      );
     } else {
-      signupApiHandler({
-        email: enteredEmail,
-        password: enteredPassword,
-        returnSecureToken: true,
-      });
+      submitApiHandler(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA3JNrobkyWUjoHwlDlZHToS5fxJYpi92Q",
+        body
+      );
     }
 
     console.log("submiting...");
