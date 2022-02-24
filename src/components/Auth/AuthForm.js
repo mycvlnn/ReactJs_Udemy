@@ -1,9 +1,11 @@
 import { useState, useRef } from "react";
+import Button from "../Button/Button";
 
 import classes from "./AuthForm.module.css";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
@@ -13,6 +15,7 @@ const AuthForm = () => {
 
   const signupApiHandler = async (values) => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA3JNrobkyWUjoHwlDlZHToS5fxJYpi92Q",
         {
@@ -30,8 +33,9 @@ const AuthForm = () => {
         throw new Error(data.error.message);
       }
     } catch (error) {
-      console.log("error", error);
+      alert(error);
     }
+    setIsLoading(false);
   };
 
   const loginApiHandler = () => {};
@@ -78,7 +82,9 @@ const AuthForm = () => {
           />
         </div>
         <div className={classes.actions}>
-          <button>{isLogin ? "Login" : "Create Account"}</button>
+          <Button isLoading={isLoading} textLoading="Sending...">
+            {isLogin ? "Login" : "Create Account"}
+          </Button>
           <button
             type="button"
             className={classes.toggle}
