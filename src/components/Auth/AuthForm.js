@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import AuthContext from "../../store/auth-context";
 import Button from "../Button/Button";
 
 import classes from "./AuthForm.module.css";
@@ -8,6 +9,7 @@ const AuthForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const { login } = useContext(AuthContext);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -23,11 +25,14 @@ const AuthForm = () => {
         method: "POST",
         body: JSON.stringify(values),
       });
+
       const data = await response.json();
       console.log("data", data);
 
       if (!response.ok) {
         throw new Error(data.error.message);
+      } else {
+        login(data.idToken);
       }
     } catch (error) {
       alert(error);
