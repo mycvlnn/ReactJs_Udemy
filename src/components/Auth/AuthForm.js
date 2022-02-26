@@ -34,10 +34,9 @@ const AuthForm = () => {
       if (!response.ok) {
         throw new Error(data.error.message);
       } else {
-        const expirationTime = new Date(
-          new Date().getTime() + +data.expiresIn * 1000
-        );
-        login(data.idToken, expirationTime.toISOString());
+        //Từ số  second mà api trả về  ta có thể  tính được ngày hết hạn. Ta không thể  dùng ngay được vì ta phải dựa vào thời gian hiện tại
+        const expirationTime = Date.now() + data.expiresIn * 1000;
+        login(data.idToken, expirationTime); //Chuyển nó qua string
         history.replace("/");
       }
     } catch (error) {
