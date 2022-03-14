@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import MeetupList from "../components/meetups/MeetupList";
 
@@ -15,8 +16,22 @@ const DUMMY_DATA = [
     address: "Thanh Loi Pho, Bo Hong Son",
   },
 ];
-const HomePage = () => {
-  return <MeetupList meetups={DUMMY_DATA} />;
+const HomePage = (props) => {
+  console.log(props);
+
+  return <MeetupList meetups={props.meetups} />;
 };
+
+//Accept async.
+export function getStaticProps() {
+  //demo send request to server and fetch data
+
+  //Always return object.
+  return {
+    props: {
+      meetups: DUMMY_DATA || [],
+    },
+  };
+}
 
 export default HomePage;
