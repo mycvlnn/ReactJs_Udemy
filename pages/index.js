@@ -17,7 +17,9 @@ const DUMMY_DATA = [
   },
 ];
 const HomePage = (props) => {
-  console.log(props);
+  useEffect(() => {
+    console.log("props", props);
+  }, [props]);
 
   return <MeetupList meetups={props.meetups} />;
 };
@@ -30,6 +32,7 @@ export function getStaticProps() {
   return {
     props: {
       meetups: DUMMY_DATA || [],
+      revalidate: 10,
     },
   };
 }
