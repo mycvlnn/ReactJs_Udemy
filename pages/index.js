@@ -17,14 +17,10 @@ const DUMMY_DATA = [
   },
 ];
 const HomePage = (props) => {
-  useEffect(() => {
-    console.log("props", props);
-  }, [props]);
-
   return <MeetupList meetups={props.meetups} />;
 };
 
-//Accept async.
+// //Accept async.
 export function getStaticProps() {
   //demo send request to server and fetch data
 
