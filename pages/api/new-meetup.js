@@ -19,16 +19,18 @@ async function handler(req, res) {
 
     try {
       const result = await meetupsCollection.insertOne(data);
-      //Close khi chung da hoan thanh
-      client.close();
 
       //trả lại trạng thái và message.
       res.status(201).json({
         message: "Meetup inserted!",
       });
+
       console.log("result", result);
     } catch (error) {
       //handle error
+    } finally {
+      //Close khi chung da hoan thanh
+      client.close();
     }
   }
 }
