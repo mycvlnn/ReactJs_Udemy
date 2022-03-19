@@ -1,10 +1,35 @@
 //POST /api/new-meetup
+import { MongoClient } from "mongodb";
 
-function handler(req, res) {
+async function handler(req, res) {
   if (req.method === "POST") {
     const data = req.body;
 
-    const { title, image, address, description } = data;
+    //Viết mã tại đây
+    const client = await MongoClient.connect(
+      "mongodb+srv://lengoaingu:gOpaSDs0cbp4f5ta@cluster0.p7kur.mongodb.net/meetups?retryWrites=true&w=majority"
+    );
+
+    const db = client.db();
+
+    //Tạo ra một collections table.
+    const meetupsCollection = db.collection("meetups"); //Nếu không có trong database nó sẽ tự động được tạo một cách nhanh chóng
+
+    //Chèn một doc mới vào trong collection này
+
+    try {
+      const result = await meetupsCollection.insertOne(data);
+      //Close khi chung da hoan thanh
+      client.close();
+
+      //trả lại trạng thái và message.
+      res.status(201).json({
+        message: "Meetup inserted!",
+      });
+      console.log("result", result);
+    } catch (error) {
+      //handle error
+    }
   }
 }
 
