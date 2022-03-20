@@ -1,6 +1,6 @@
 //Nextjs sẽ detect bundle này và bỏ qua ở phía client.
-import { MongoClient } from "mongodb";
 import MeetupList from "../components/meetups/MeetupList";
+import connectDatabase from "../config/mongodb";
 
 const HomePage = (props) => {
   return <MeetupList meetups={props.meetups} />;
@@ -8,13 +8,7 @@ const HomePage = (props) => {
 
 // //Accept async.
 export async function getStaticProps() {
-  const client = await MongoClient.connect(
-    "mongodb+srv://lengoaingu:gOpaSDs0cbp4f5ta@cluster0.p7kur.mongodb.net/meetups?retryWrites=true&w=majority"
-  );
-
-  const db = client.db();
-
-  const meetupsCollection = db.collection("meetups");
+  const { meetupsCollection, client } = await connectDatabase();
 
   //Tìm ra tất cả dữ liệu
   const meetups = await meetupsCollection.find().toArray();
@@ -30,7 +24,7 @@ export async function getStaticProps() {
         image: meetup.image,
         id: meetup._id.toString(),
       })),
-      revalidate: 1,
+      revalidate: 10,
     },
   };
 }
