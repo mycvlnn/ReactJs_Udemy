@@ -1,34 +1,36 @@
-import { useEffect, useState } from "react";
-import Layout from "../components/layout/Layout";
+//Nextjs sẽ detect bundle này và bỏ qua ở phía client.
+import { MongoClient } from "mongodb";
 import MeetupList from "../components/meetups/MeetupList";
 
-const DUMMY_DATA = [
-  {
-    id: "m1",
-    title: "The first meetup",
-    image: "https://picsum.photos/1000",
-    address: "Thanh Loi Pho, Bo Hong Son",
-  },
-  {
-    id: "m2",
-    title: "The second meetup",
-    image: "https://picsum.photos/1000",
-    address: "Thanh Loi Pho, Bo Hong Son",
-  },
-];
 const HomePage = (props) => {
   return <MeetupList meetups={props.meetups} />;
 };
 
 // //Accept async.
-export function getStaticProps() {
-  //demo send request to server and fetch data
+export async function getStaticProps() {
+  const client = await MongoClient.connect(
+    "mongodb+srv://lengoaingu:gOpaSDs0cbp4f5ta@cluster0.p7kur.mongodb.net/meetups?retryWrites=true&w=majority"
+  );
+
+  const db = client.db();
+
+  const meetupsCollection = db.collection("meetups");
+
+  //Tìm ra tất cả dữ liệu
+  const meetups = await meetupsCollection.find().toArray();
+
+  client.close();
 
   //Always return object.
   return {
     props: {
-      meetups: DUMMY_DATA || [],
-      revalidate: 10,
+      meetups: meetups.map((meetup) => ({
+        title: meetup.title,
+        address: meetup.address,
+        image: meetup.image,
+        id: meetup._id.toString(),
+      })),
+      revalidate: 1,
     },
   };
 }
