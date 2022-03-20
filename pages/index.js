@@ -1,9 +1,22 @@
 //Nextjs sẽ detect bundle này và bỏ qua ở phía client.
-import MeetupList from "../components/meetups/MeetupList";
 import connectDatabase from "../config/mongodb";
+import MeetupList from "../components/meetups/MeetupList";
+import Head from "next/head";
+import { Fragment } from "react/cjs/react.production.min";
 
 const HomePage = (props) => {
-  return <MeetupList meetups={props.meetups} />;
+  return (
+    <Fragment>
+      <Head>
+        <title>React Meetups</title>
+        <meta
+          name="description"
+          content="Browse a huge list of highy active React meetups!"
+        />
+      </Head>
+      <MeetupList meetups={props.meetups} />
+    </Fragment>
+  );
 };
 
 // //Accept async.
