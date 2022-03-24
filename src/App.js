@@ -51,6 +51,12 @@ class App extends Component {
           unmountOnExit
           in={this.state.toggle}
           timeout={1000}
+          onEnter={() => console.log("enter")}
+          onEntering={() => console.log("entering")}
+          onEntered={() => console.log("entered")}
+          onExit={() => console.log("exit")}
+          onExiting={() => console.log("onExiting")}
+          onExited={() => console.log("onExited")}
         >
           {(state) => (
             <div
