@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Transition } from "react-transition-group";
 
 import "./App.css";
 import Modal from "./components/Modal/Modal";
 import Backdrop from "./components/Backdrop/Backdrop";
 import List from "./components/List/List";
+import { CSSTransition } from "react-transition-group";
 
 const timing = {
   enter: 400,
@@ -32,22 +32,17 @@ class App extends Component {
     return (
       <div className="App">
         <h1>React Animations</h1>
+        <Modal closed={this.hideModal} show={this.state.modalIsOpen} />
 
-        <Transition
+        <CSSTransition
           mountOnEnter
           unmountOnExit
           in={this.state.modalIsOpen}
-          timeout={timing}
+          timeout={1000}
+          classNames="fade-in"
         >
-          {(state) => {
-            return (
-              <div>
-                <Modal closed={this.hideModal} state={state} />
-                <Backdrop state={state} />
-              </div>
-            );
-          }}
-        </Transition>
+          <Backdrop className="Backdrop" />
+        </CSSTransition>
 
         <button onClick={this.showModal} className="Button">
           Open Modal

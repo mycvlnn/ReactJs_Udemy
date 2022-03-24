@@ -6,12 +6,21 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
+  transition: all 0.3s linear;
 }
 
-.BackdropOpen {
-  display: block;
+.fade-in-enter {
+  opacity: 0;
 }
 
-.BackdropClosed {
-  display: none;
+.fade-in-enter-active {
+  opacity: 1;
+}
+
+.fade-in-enter-done {
+  opacity: 1;
+}
+
+.fade-in-exit {
+  opacity: 0;
 }

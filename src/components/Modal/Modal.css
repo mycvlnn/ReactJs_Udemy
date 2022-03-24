@@ -12,6 +12,14 @@
   width: 50%;
 }
 
+.slide-down-enter {
+  animation: slideDown 0.3s linear forwards;
+}
+
+.slide-down-exit {
+  animation: slideUp 0.3s linear forwards;
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;
