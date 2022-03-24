@@ -6,22 +6,14 @@ import Modal from "./components/Modal/Modal";
 import Backdrop from "./components/Backdrop/Backdrop";
 import List from "./components/List/List";
 
-const defaultStyle = {
-  transition: "opacity 300ms ease-in-out",
-  opacity: 0,
-};
-
-const transitionStyles = {
-  entering: { opacity: 1 },
-  entered: { opacity: 1 },
-  exiting: { opacity: 0 },
-  exited: { opacity: 0 },
+const timing = {
+  enter: 400,
+  exit: 1000,
 };
 
 class App extends Component {
   state = {
     modalIsOpen: false,
-    toggle: false,
   };
 
   showModal = () => {
@@ -39,46 +31,24 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <button
-          onClick={() =>
-            this.setState((prevState) => ({ toggle: !prevState.toggle }))
-          }
-        >
-          Toggle
-        </button>
+        <h1>React Animations</h1>
+
         <Transition
           mountOnEnter
           unmountOnExit
-          in={this.state.toggle}
-          timeout={1000}
-          onEnter={() => console.log("enter")}
-          onEntering={() => console.log("entering")}
-          onEntered={() => console.log("entered")}
-          onExit={() => console.log("exit")}
-          onExiting={() => console.log("onExiting")}
-          onExited={() => console.log("onExited")}
+          in={this.state.modalIsOpen}
+          timeout={timing}
         >
-          {(state) => (
-            <div
-              style={{
-                background: "orange",
-                width: 200,
-                height: 200,
-                margin: "auto",
-                ...defaultStyle,
-                ...transitionStyles[state],
-              }}
-            >
-              BOX
-            </div>
-          )}
+          {(state) => {
+            return (
+              <div>
+                <Modal closed={this.hideModal} state={state} />
+                <Backdrop state={state} />
+              </div>
+            );
+          }}
         </Transition>
-        <h1>React Animations</h1>
 
-        {this.state.modalIsOpen && (
-          <Modal closed={this.hideModal} show={this.state.modalIsOpen} />
-        )}
-        {this.state.modalIsOpen && <Backdrop show={this.state.modalIsOpen} />}
         <button onClick={this.showModal} className="Button">
           Open Modal
         </button>
