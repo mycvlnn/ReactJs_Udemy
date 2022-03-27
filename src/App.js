@@ -6,11 +6,6 @@ import Backdrop from "./components/Backdrop/Backdrop";
 import List from "./components/List/List";
 import { CSSTransition } from "react-transition-group";
 
-const timing = {
-  enter: 400,
-  exit: 1000,
-};
-
 class App extends Component {
   state = {
     modalIsOpen: false,
