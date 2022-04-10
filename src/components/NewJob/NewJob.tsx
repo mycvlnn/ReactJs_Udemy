@@ -1,14 +1,12 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
+import { TodoContext } from '../../store/TodoContext'
 import classes from './NewJob.module.css'
 
-interface NewJobProps {
-  onAddJob: (textJob: string) => void
-}
-
-const NewJob: React.FC<NewJobProps> = (props) => {
+const NewJob: React.FC = (props) => {
+  const { addJobHandler } = useContext(TodoContext)
   const inputTextRef = useRef<HTMLInputElement>(null)
 
-  const addJobHandler = (event: React.FormEvent) => {
+  const addJob = (event: React.FormEvent) => {
     event.preventDefault()
     const enteredTextJob: string = inputTextRef.current!.value
 
@@ -16,12 +14,12 @@ const NewJob: React.FC<NewJobProps> = (props) => {
       alert('Please enter your job')
       return
     }
-    props.onAddJob(enteredTextJob)
+    addJobHandler(enteredTextJob)
     inputTextRef.current!.value = ''
   }
 
   return (
-    <form onSubmit={addJobHandler} className={classes.form}>
+    <form onSubmit={addJob} className={classes.form}>
       <label>Task To Do</label>
       <input ref={inputTextRef} type="text" />
       <button>Add To Do</button>

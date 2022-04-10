@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { TodoContext } from '../../store/TodoContext'
 import classes from './TodoItem.module.css'
 
 interface TodoItemProps {
   job: string
-  onRemoveJob: () => void
+  id: string
 }
 
-const TodoItem: React.FC<TodoItemProps> = (props) => {
+const TodoItem: React.FC<TodoItemProps> = ({ id, job }) => {
+  const { removeJobHanlder } = useContext(TodoContext)
   return (
-    <li onClick={props.onRemoveJob} className={classes.item}>
-      {props.job}
+    <li onClick={() => removeJobHanlder(id)} className={classes.item}>
+      {job}
     </li>
   )
 }

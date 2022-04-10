@@ -1,23 +1,14 @@
-import React from 'react'
-import Todo from '../../models/todo'
+import React, { useContext } from 'react'
+import { TodoContext } from '../../store/TodoContext'
 import TodoItem from '../TodoItem/TodoItem'
 import classes from './Todos.module.css'
 
-interface TodosProps {
-  jobList: Todo[]
-  onRemoveJob: (idJob: string) => void
-}
+const Todos: React.FC = () => {
+  const { jobList } = useContext(TodoContext)
 
-const Todos: React.FC<TodosProps> = ({ jobList, onRemoveJob }) => {
   const renderTodosList = () => {
     return jobList.map((item) => {
-      return (
-        <TodoItem
-          onRemoveJob={() => onRemoveJob(item.id)}
-          key={item.id}
-          job={item.job}
-        />
-      )
+      return <TodoItem id={item.id} key={item.id} job={item.job} />
     })
   }
 
